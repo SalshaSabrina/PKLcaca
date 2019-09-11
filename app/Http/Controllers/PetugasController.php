@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Petugas;
 use Session;
 use DataTables;
+use Validator;
 
 class PetugasController extends Controller
 {
@@ -53,6 +54,17 @@ class PetugasController extends Controller
      */
     public function store(Request $request)
     {
+
+        $request->validate([
+            'kode_petugas' => 'required|max:4',
+            'nama' => 'required',
+            'jk' => 'required',
+            'jabatan' => 'required',
+            'telp' => 'required',
+            'alamat' => 'required'
+        ]);
+
+
         Petugas::updateOrCreate(['id' => $request->petugas_id],
                 ['kode_petugas' => $request->kode_petugas,
                  'nama' => $request->nama,

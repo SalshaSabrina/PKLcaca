@@ -47,7 +47,13 @@
                     <div class="form-group">
                         <label for="name" class="col-sm-4 control-label">Kode Petugas</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" id="kode_petugas" name="kode_petugas" placeholder="Enter Kode Petugas" value="" maxlength="50" required="">
+                        <input type="text" class="form-control @error('kode_petugas') is-invalid @enderror" 
+                        id="kode_petugas" name="kode_petugas" placeholder="Masukkan Kode Petugas" value="" maxlength="50" required="">
+                        @error('kode_petugas')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{$message}}</strong>
+                                        </span>
+                                        @enderror
                         </div>
                     </div>
      
@@ -103,6 +109,54 @@
     
 </body>
     
+<script>
+        $("#productForm").validate({
+            rules: {
+                kode_petugas: {
+                    required:true,
+                    maxlength : 4
+                },
+                nama: {
+                    required:true
+                },
+                jk:{
+                    required:true
+                },
+                jabatan: {
+                    required:true
+                },
+                telp:{
+                    required:true
+                },
+                alamat: {
+                    required:true
+                }
+            },
+            messages:{
+                kode_petugas:{
+                    required:"Harap diisi",
+                    maxlength:"Tidak bisa lebih dari 4"
+                },
+                nama:{
+                    required:"Harap diisi"
+                },
+                jk:{
+                    required:"Harap diisi"
+                },
+                jabatan:{
+                    required:"Harap diisi"
+                },
+                telp:{
+                    required:"Harap diisi"
+                },
+                alamat:{
+                    required:"Harap diisi"
+                }
+            }
+        })
+    </script>
+
+
 <script type="text/javascript">
   $(function () {
      

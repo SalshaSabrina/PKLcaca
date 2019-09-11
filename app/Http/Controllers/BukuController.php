@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Buku;
 use Session;
 use DataTables;
+use Validator;
 
 class BukuController extends Controller
 {

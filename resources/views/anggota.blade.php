@@ -46,7 +46,13 @@
                     <div class="form-group">
                         <label for="name" class="col-sm-4 control-label">Kode Anggota</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" id="kode_anggota" name="kode_anggota" placeholder="Enter Kode Anggota" value="" maxlength="50" required="">
+                        <input type="text" class="form-control @error('kode_anggota') is-invalid @enderror" 
+                        id="kode_anggota" name="kode_anggota" placeholder="Masukkan Kode Anggota" value="" maxlength="50" required="">
+                        @error('kode_anggota')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{$message}}</strong>
+                                        </span>
+                                        @enderror
                         </div>
                     </div>
      
@@ -54,8 +60,7 @@
                         <label class="col-sm-2 control-label">Nama</label>
                         <div class="col-sm-12">
                         <input type="text" class="form-control" id="nama" name="nama" placeholder="Enter Nama" value="" maxlength="50" required="">
-
-                        </div>
+                      </div>
                     </div>
 
                     <div class="form-group">
@@ -95,6 +100,47 @@
     
 </body>
     
+<script>
+        $("#productForm").validate({
+            rules: {
+                kode_anggota: {
+                    required:true,
+                    maxlength : 4
+                },
+                nama: {
+                    required:true
+                },
+                jk:{
+                    required:true
+                },
+                jurusan: {
+                    required:true
+                },
+                alamat: {
+                    required:true
+                }
+            },
+            messages:{
+                kode_anggota:{
+                    required:"Harap diisi",
+                    maxlength:"Tidak bisa lebih dari 4"
+                },
+                nama:{
+                    required:"Harap diisi"
+                },
+                jk:{
+                    required:"Harap diisi"
+                },
+                jurusan:{
+                    required:"Harap diisi"
+                },
+                alamat:{
+                    required:"Harap diisi"
+                }
+            }
+        })
+    </script>
+
 <script type="text/javascript">
   $(function () {
      
@@ -103,6 +149,7 @@
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           }
     });
+
     
     var table = $('.data-table').DataTable({
         processing: true,
@@ -176,6 +223,7 @@
             success: function (data) {
                 table.draw();
             },
+       
             error: function (data) {
                 console.log('Error:', data);
             }

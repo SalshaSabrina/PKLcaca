@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Anggota;
 use Session;
 use DataTables;
+use Validator;
 
 class AnggotaController extends Controller
 {
@@ -53,6 +54,16 @@ class AnggotaController extends Controller
      */
     public function store(Request $request)
     {
+
+        $request->validate([
+            'kode_anggota' => 'required|max:4',
+            'nama' => 'required',
+            'jk' => 'required',
+            'jurusan' => 'required',
+            'alamat' => 'required'
+        ]);
+
+
         Anggota::updateOrCreate(['id' => $request->anggota_id],
                 ['kode_anggota' => $request->kode_anggota,
                  'nama' => $request->nama,

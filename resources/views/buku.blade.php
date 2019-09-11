@@ -46,7 +46,13 @@
                     <div class="form-group">
                         <label for="name" class="col-sm-4 control-label">Kode Buku</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" id="kode_buku" name="kode_buku" placeholder="Enter Kode Buku" value="" maxlength="50" required="">
+                        <input type="text" class="form-control @error('kode_buku') is-invalid @enderror" 
+                        id="kode_buku" name="kode_buku" placeholder="Masukkan Kode Buku" value="" maxlength="50" required="">
+                        @error('kode_buku')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{$message}}</strong>
+                                        </span>
+                                        @enderror
                         </div>
                     </div>
      
@@ -94,6 +100,47 @@
 </div>
     
 </body>
+
+<script>
+        $("#productForm").validate({
+            rules: {
+                kode_buku: {
+                    required:true,
+                    maxlength : 4
+                },
+                judul: {
+                    required:true
+                },
+                penulis:{
+                    required:true
+                },
+                penerbit: {
+                    required:true
+                },
+                tahun_terbit: {
+                    required:true
+                }
+            },
+            messages:{
+                kode_buku:{
+                    required:"Harap diisi",
+                    maxlength:"Tidak bisa lebih dari 4"
+                },
+                judul:{
+                    required:"Harap diisi"
+                },
+                penulis:{
+                    required:"Harap diisi"
+                },
+                penerbit:{
+                    required:"Harap diisi"
+                },
+                tahun_terbit:{
+                    required:"Harap diisi"
+                }
+            }
+        })
+    </script>
     
 <script type="text/javascript">
   $(function () {
