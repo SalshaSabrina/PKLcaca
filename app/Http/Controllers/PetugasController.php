@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\PetugasRequest;
 use App\Petugas;
 use Session;
 use DataTables;
@@ -52,18 +54,8 @@ class PetugasController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PetugasRequest $request)
     {
-
-        $request->validate([
-            'kode_petugas' => 'required|max:4',
-            'nama' => 'required',
-            'jk' => 'required',
-            'jabatan' => 'required',
-            'telp' => 'required',
-            'alamat' => 'required'
-        ]);
-
 
         Petugas::updateOrCreate(['id' => $request->petugas_id],
                 ['kode_petugas' => $request->kode_petugas,

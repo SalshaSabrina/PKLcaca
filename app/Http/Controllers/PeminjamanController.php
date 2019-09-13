@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\PeminjamanRequest;
 use App\Peminjaman;
 use Session;
 use DataTables;
@@ -51,7 +53,7 @@ class PeminjamanController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PeminjamanRequest $request)
     {
         Peminjaman::updateOrCreate(['id' => $request->peminjaman_id],
                 ['kode_pinjem' => $request->kode_pinjem,

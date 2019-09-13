@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\RakRequest;
 use App\Rak;
 use Session;
 use DataTables;
@@ -51,7 +53,7 @@ class RakController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RakRequest $request)
     {
         Rak::updateOrCreate(['id' => $request->rak_id],
                 ['kode_rak' => $request->kode_rak,

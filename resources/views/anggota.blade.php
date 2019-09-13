@@ -15,6 +15,63 @@
 <body>
     
 <div class="container">
+<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+            <div class="container">
+                <a class="navbar-brand" href="{{ url('/') }}">
+                    {{ config('app.name', 'Laravel') }}
+                </a>
+                <a class="nav-link" href="{{ url('/petugas') }}">Petugas</a>
+                    <a class="nav-link" href="{{ url('/anggota') }}">Anggota</a>
+                    <a class="nav-link" href="{{ url('/buku') }}">Buku</a>
+                    <a class="nav-link" href="{{ url('/rak') }}">Rak</a>
+                    <a class="nav-link" href="{{ url('/peminjaman') }}">Peminjaman</a>
+                    <a class="nav-link" href="{{ url('/pengembalian') }}">Pengembalian</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- Left Side Of Navbar -->
+                    <ul class="navbar-nav mr-auto">
+
+                    </ul>
+
+                    <!-- Right Side Of Navbar -->
+                    <ul class="navbar-nav ml-auto">
+                        <!-- Authentication Links -->
+                        @guest
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            </li>
+                            @if (Route::has('register'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                </li>
+                            @endif
+                        @else
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
+                                </div>
+                            </li>
+                        @endguest
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <br>
     <center><h2>Perpustakaan</h2></center>
     <a class="btn btn-success" href="javascript:void(0)" id="createNewProduct"> Tambah Anggota</a><br>
     <table class="table table-bordered data-table">
@@ -41,6 +98,10 @@
                 <h4 class="modal-title" id="modelHeading"></h4>
             </div>
             <div class="modal-body">
+                <div id="result">
+
+
+                </div>
                 <form id="productForm" name="productForm" class="form-horizontal">
                    <input type="hidden" name="anggota_id" id="anggota_id">
                     <div class="form-group">
@@ -66,7 +127,8 @@
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Jenis Kelamin</label>
                         <div class="col-sm-12">
-                        <input type="text" class="form-control" id="jk" name="jk" placeholder="Enter Jenis Kelamin" value="" maxlength="50" required="">
+                        <input type="radio" id="jk" name="jk" value="Laki-laki" clicked/> Laki-laki
+                        <input type="radio" id="jk" name="jk" value="Perempuan" /> Perempuan
 
                         </div>
                     </div>
@@ -97,7 +159,7 @@
         </div>
     </div>
 </div>
-    
+
 </body>
     
 <script>
@@ -205,8 +267,17 @@
               table.draw();
          
           },
-          error: function (data) {
-              console.log('Error:', data);
+          error: function (request,status,error) {
+              $('#result').html('');
+              json = $.parseJSON(request.responseText);
+              $("#result").html('');
+            //   $('#alert').css('display','block');
+              $.each(json.errors, function(key, value){
+                  console.log(value[0]);
+                //   $("#result").append(value[0]);
+                  
+                  $('#result').append('<p>'+value[0]+'</p>');
+              });
               $('#saveBtn').html('Save Changes');
           }
       });
@@ -232,4 +303,5 @@
      
   });
 </script>
+</body>
 </html>

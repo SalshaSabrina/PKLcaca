@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\PengembalianRequest;
 use App\Pengembalian;
 use Session;
 use DataTables;
@@ -51,7 +53,7 @@ class PengembalianController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PengembalianRequest $request)
     {
         $tanggal_kembali = strtotime($request->tanggal_kembali);
         $jatuh_tempo = strtotime($request->jatuh_tempo);
@@ -59,7 +61,7 @@ class PengembalianController extends Controller
         $jumlah_hari = floor($jumlah / (60 * 60 * 24));
         if ($jumlah_hari <= 0) {
             $jumlah_hari = 0;
-            $total_denda = 1*2000;
+            $total_denda = $jumlah_hari*2000;
         }else {
             $total_denda = $jumlah_hari*2000;
         }

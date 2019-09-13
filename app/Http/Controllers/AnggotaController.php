@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\AnggotaRequest;
 use App\Anggota;
 use Session;
 use DataTables;
@@ -52,17 +54,9 @@ class AnggotaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AnggotaRequest $request)
     {
-
-        $request->validate([
-            'kode_anggota' => 'required|max:4',
-            'nama' => 'required',
-            'jk' => 'required',
-            'jurusan' => 'required',
-            'alamat' => 'required'
-        ]);
-
+        
 
         Anggota::updateOrCreate(['id' => $request->anggota_id],
                 ['kode_anggota' => $request->kode_anggota,
@@ -71,7 +65,6 @@ class AnggotaController extends Controller
                  'jurusan' => $request->jurusan,
                  'alamat' => $request->alamat
                  ]);        
-   
         return response()->json(['success'=>'Anggota saved successfully.']);
     }
 

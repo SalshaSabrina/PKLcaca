@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\BukuRequest;
 use App\Buku;
 use Session;
 use DataTables;
@@ -52,8 +54,11 @@ class BukuController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BukuRequest $request)
     {
+
+        
+
         Buku::updateOrCreate(['id' => $request->buku_id],
                 ['kode_buku' => $request->kode_buku,
                  'judul' => $request->judul,
